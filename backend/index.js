@@ -3,6 +3,7 @@ import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import path from "path"; 
 import passport from "passport";
 import session from "express-session"; 
 import ConnectMongo from "connect-mongodb-session";
@@ -28,23 +29,23 @@ const httpServer = http.createServer(app);
 
 const MongoDBStore = ConnectMongo(session); 
 const store = new MongoDBStore({
-  uri: process.env.MONGO_URI,
-  collection: "sessions",
+    uri: process.env.MONGO_URI,
+    collection: "sessions",
 });
 
 store.on("error", (err) => { console.log(err) });
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false, // this option specifies whether to save the session to the store on every request 
-    saveUninitialized: false, // option specifies whether to save uninitialized sessions to the store
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      httpOnly: true // prevents Cross-site scripting attacks
-    },
-    store: store
-  })
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false, // this option specifies whether to save the session to the store on every request 
+        saveUninitialized: false, // option specifies whether to save uninitialized sessions to the store
+        cookie: {
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+          httpOnly: true // prevents Cross-site scripting attacks
+        },
+        store: store
+    })
 );
 
 app.use(passport.initialize()); 
