@@ -4,25 +4,26 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true, 
     }, 
     name: {
         type: String,
-        required: true
+        required: true, 
     }, 
     password: {
         type: String,
-        required: true
+        required: true, 
     },
     profilePicture: {
         type: String,
-        default: ""
+        default: "", 
     },
     gender: {
         type: String,
         enum: ["male", "female"],
     }, 
-}, {timestamps: true});
+}, 
+{timestamps: true});
 
 const User = mongoose.model("User", userSchema);
 
