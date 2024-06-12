@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import path from "path"; 
 import passport from "passport";
 import session from "express-session"; 
-import ConnectMongo from "connect-mongodb-session";
+import connectMongo from "connect-mongodb-session";
 
 import { ApolloServer } from "@apollo/server";  
 import { expressMiddleware } from "@apollo/server/express4"; 
@@ -27,7 +27,7 @@ configurePassport();
 const app = express(); 
 const httpServer = http.createServer(app); 
 
-const MongoDBStore = ConnectMongo(session); 
+const MongoDBStore = connectMongo(session); 
 const store = new MongoDBStore({
     uri: process.env.MONGO_URI,
     collection: "sessions",
@@ -80,4 +80,5 @@ app.use(
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 await connectDB(); 
 
+// need to be http instead of https, otherwise will get "POST https://localhost:4000/graphql net::ERR_SSL_PROTOCOL_ERROR" error in console 
 console.log(`🚀 Server ready at http://localhost:4000/graphql`);

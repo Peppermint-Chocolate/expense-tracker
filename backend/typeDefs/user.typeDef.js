@@ -35,6 +35,6 @@ const userTypeDef = `#graphql
     type LogoutResponse {
         message: String!  
     }
-`
+`; 
 
-export default userTypeDef 
+export default userTypeDef; 

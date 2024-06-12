@@ -15,7 +15,7 @@ const userResolver = {
                     throw new Error("User already exists");
                 }
 
-                const salt = bcrypt.genSalt(10); 
+                const salt = await bcrypt.genSalt(10); 
                 const hashedPassword = await bcrypt.hash(password, salt);
 
                 // https://avatar-placeholder.iran.liara.run/ 
@@ -56,10 +56,10 @@ const userResolver = {
         logOut: async (_, __, context) => {
             try {
                 await context.logout(); 
-                req.session.destroy((err) => {
+                context.req.session.destroy((err) => {
                     if (err) throw err; 
                 }); 
-                res.clearCookie("connect.sid"); 
+                context.res.clearCookie("connect.sid"); 
                 return {message: "Logged out successfully"};
             } catch (err) {
                 console.error("Error in logOut: ", err); 
